@@ -2076,7 +2076,7 @@ jaegerBackendExample:
   enabled: false
   # allInOneImage contains the name (including tag)
   # of the container image to use for the example Jaeger back end.
-  allInOneImage: "jaegertracing/all-in-one:1.57"
+  allInOneImage: "jaegertracing/jaeger:2.20.0" #"jaegertracing/all-in-one:1.57"
   # [DEPRECATED: use probes instead] livenessProbeInitialDelaySeconds contains the value to use for the "initialDelaySeconds"
   # configuration property of the component's liveness probe.
   # The value of the top level "livenessProbeInitialDelaySeconds" property will be used if not set.
@@ -2089,11 +2089,11 @@ jaegerBackendExample:
     livenessProbe:
       initialDelaySeconds: 300
       httpGet:
-        path: "/"
+        path: "/status"
     readinessProbe:
       initialDelaySeconds: 10
       httpGet:
-        path: "/"
+        path: "/status"
   # resources contains the container's requests and limits for CPU and memory
   # as defined by the Kubernetes API.
   # Refer to https://kubernetes.io/docs/concepts/configuration/manage-compute-resources-container/
@@ -2115,11 +2115,9 @@ jaegerBackendExample:
     priorityClassName: ""
     affinity: {}
 
-  # env contains environment variables to set for the Jaeger all-in-one container.
-  # The default variables configure the container to keep up to 100000 traces in memory.
-  env:
-  - name: "MEMORY_MAX_TRACES"
-    value: "100000"
+  # The default settings configure the container to keep up to 100000 traces in memory.
+  config:
+    max_traces: 100000
 
   # extraVolumes contains additional kubernetes Volume definitions representing volumes
   # that can mounted into the container's file system.
