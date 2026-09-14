@@ -101,6 +101,10 @@ The command removes all the Kubernetes components associated with the chart and 
 
 ## Release Notes
 
+### 2.7.2
+
+- Update Jaeger image to 2.20.0, rename config key to `jaegerImage`, and adapt layout for v2 specifications.
+
 ### 2.7.0
 
 * Use Hono 2.7.0 container images.

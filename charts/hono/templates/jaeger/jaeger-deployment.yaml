@@ -11,7 +11,7 @@
 #
 # SPDX-License-Identifier: EPL-2.0
 #
-{{- $args := dict "dot" . "component" "tracing" "name" "jaeger-all-in-one" "componentConfig" .Values.jaegerBackendExample }}
+{{- $args := dict "dot" . "component" "tracing" "name" "jaeger" "componentConfig" .Values.jaegerBackendExample }}
 {{- $metricsPort := .Values.jaegerBackendExample.metricsPort | default "8888" }}
 {{- $healthPort := .Values.jaegerBackendExample.healthPort | default "13133" }}
 apiVersion: apps/v1
@@ -41,7 +41,7 @@ spec:
       {{- include "hono.pod.affinity" $args | nindent 6 }}
       containers:
       - name: jaeger
-        image: {{ .Values.jaegerBackendExample.allInOneImage }}
+        image: {{ .Values.jaegerBackendExample.jaegerImage }}
         args: ["--config=/etc/jaeger/jaeger.yaml"]
         env:
         {{- with .Values.jaegerBackendExample.env }}
